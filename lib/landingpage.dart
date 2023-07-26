@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonimo/loginpage.dart';
+import 'package:harmonimo/loginpageOld.dart';
+
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -24,7 +26,8 @@ class _LandingPageState extends State<LandingPage> {
             ),
             Container(
 
-              child: Text("하모니모",style: TextStyle(fontSize: 50,color: Colors.black, fontWeight: FontWeight.w800,shadows: [Shadow(blurRadius: 4,
+              child: Text("하모니모",style: TextStyle(fontSize: 50,color: Color(
+                  0xffacacac), fontWeight: FontWeight.w800,shadows: [Shadow(blurRadius: 4,
                   color: Color(0x3F000000),offset: Offset(0.0,4.0))]),),
             ),
             Spacer(),
@@ -35,11 +38,21 @@ class _LandingPageState extends State<LandingPage> {
             ),
             Spacer(),
             ElevatedButton(onPressed: () {
+              Get.to(LoginPageOld());
+            }, child: Container(
+              width: 320,
+              height: 48,
+              child: Center(child: Text("어르신 로그인",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 20))),
+            ),style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xFFA9CC60)))),
+            SizedBox(
+              height: 30,
+            ),
+            ElevatedButton(onPressed: () {
               Get.to(LoginPage());
             }, child: Container(
               width: 320,
               height: 48,
-              child: Center(child: Text("로그인",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 12))),
+              child: Center(child: Text("일반 로그인",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 12))),
             ),style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xFFA9CC60)))),
             Spacer()
 

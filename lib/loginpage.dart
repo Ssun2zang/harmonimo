@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:harmonimo/signup.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -8,10 +10,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String ID = "chunsik";
+  String PW = "1234";
   bool _obscureText = true;
+
+  final TextEditingController _textEditingController1 = TextEditingController();
+  final TextEditingController _textEditingController2 = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _textEditingController1 = TextEditingController();
+
 
     return Scaffold(
       appBar:AppBar(title: Text("일반 로그인",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w700,fontSize: 18)),backgroundColor: Colors.white,centerTitle: true,
@@ -27,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 100,
               ),
               Container(
+                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 width: 500,
                 child: TextField(
                   controller: _textEditingController1,
@@ -45,8 +53,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 50,),
               Container(
+                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 width: 500,
                 child: TextField(
+                  controller: _textEditingController2,
                     obscureText: _obscureText,
                     onChanged: (value) {},
                     decoration: InputDecoration(border: OutlineInputBorder(),labelText: '비밀번호',labelStyle: TextStyle(color: Colors.grey),
@@ -69,10 +79,10 @@ class _LoginPageState extends State<LoginPage> {
                 height: 30,
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(210, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                 alignment: Alignment.centerLeft,
                 child: TextButton(onPressed: () {
-
+                  Get.to(SignUp());
                 }, child: Text("회원가입 >",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),))
 
               ),
@@ -80,7 +90,15 @@ class _LoginPageState extends State<LoginPage> {
                 height: 30,
               ),
               ElevatedButton(onPressed: (){
-
+                if(_textEditingController1.text == ID&&_textEditingController2.text==PW){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("로그인 성공")));
+                }
+                else if(_textEditingController1.text!=ID){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("아이디가 다릅니다")));
+                }
+                else if(_textEditingController2.text!=PW){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("비밀번호가 다릅니다")));
+                }
               }, child: Container(
                 width: 320,
                 height: 48,

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:harmonimo/loginOld.dart';
+import 'package:harmonimo/signupOld.dart';
 
 class LoginPageOld extends StatefulWidget {
   const LoginPageOld({super.key});
@@ -25,7 +28,7 @@ class _LoginPageOldState extends State<LoginPageOld> {
             ),
             SizedBox(height: 25),
             ElevatedButton(onPressed: (){
-
+              Get.to(SignUpOld());
             }, child: Container(
               width: 320,
               height: 79,
@@ -33,7 +36,7 @@ class _LoginPageOldState extends State<LoginPageOld> {
             ),style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xFFA9CC60)))),
             SizedBox(height: 25),
             ElevatedButton(onPressed: (){
-
+              Get.to(LoginOld());
             }, child: Container(
               width: 320,
               height: 79,

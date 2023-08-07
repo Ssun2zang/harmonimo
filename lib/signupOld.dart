@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:harmonimo/API/signup_api.dart';
+import 'package:harmonimo/signupOld2.dart';
 
 class SignUpOld extends StatefulWidget {
   const SignUpOld({super.key});
@@ -11,6 +14,10 @@ class _SignUpOldState extends State<SignUpOld> {
   final TextEditingController _textEditingController1 = TextEditingController();
   final TextEditingController _textEditingController2 = TextEditingController();
   final TextEditingController _textEditingController3 = TextEditingController();
+  String id='';
+  String pw='';
+  int marimoId = 0;
+  SignUpApi signup = SignUpApi();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +90,27 @@ class _SignUpOldState extends State<SignUpOld> {
                 ),
               ),
               SizedBox(height: 36,),
-              ElevatedButton(onPressed: (){
+              ElevatedButton(onPressed: () async {
+                try{
+                  marimoId = await signup.IsAvailable(_textEditingController1.text);
+                }catch(e){
+                  print('Error:$e');
+                }
+                if(marimoId!=0){//사용자 존재
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("이미 존재하는 고유번호입니다.")));
+                }
+                else{
+                  if(_textEditingController2.text==_textEditingController3.text){
+                    id = _textEditingController1.text;
+                    pw = _textEditingController2.text;
+                    Get.to(SignUpOld2(),arguments: {'id':'$id','pw':'$pw'});
+                    //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("고고.")));
+                  }
+                  else{
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("입력하신 비밀번호가 다릅니다.")));
+                  }
+
+                }
 
               }, child: Container(
                 width: 320,

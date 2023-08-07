@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonimo/API/login_api.dart';
 import 'package:harmonimo/signup.dart';
+import 'package:harmonimo/mainpage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,8 +12,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String ID = "chunsik";
-  String PW = "1234";
+
+  LoginApi loginApi = LoginApi();
+  int userId = 0;
   bool _obscureText = true;
 
   final TextEditingController _textEditingController1 = TextEditingController();
@@ -89,15 +92,19 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: 30,
               ),
-              ElevatedButton(onPressed: (){
-                if(_textEditingController1.text == ID&&_textEditingController2.text==PW){
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("로그인 성공")));
+              ElevatedButton(onPressed: () async {
+                try{
+                  userId = await loginApi.login(_textEditingController1.text, _textEditingController2.text);
+
+
+                }catch(e){
+                  print('Error:$e');
                 }
-                else if(_textEditingController1.text!=ID){
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("아이디가 다릅니다")));
+                if(userId!=0){
+                  Get.to(MainPage());
                 }
-                else if(_textEditingController2.text!=PW){
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("비밀번호가 다릅니다")));
+                else{
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("로그인 실패")));
                 }
               }, child: Container(
                 width: 320,

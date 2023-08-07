@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:harmonimo/API/signup_api.dart';
+import 'package:harmonimo/signup2.dart';
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
 
@@ -8,9 +10,16 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  SignUpApi signup = SignUpApi();
   final TextEditingController _textEditingController1 = TextEditingController();
+  final TextEditingController _textEditingController2 = TextEditingController();
+  final TextEditingController _textEditingController3 = TextEditingController();
   bool _obscureText1 = true;
   bool _obscureText2 = true;
+  String id='';
+  String pw='';
+  int marimoId = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +56,7 @@ class _SignUpState extends State<SignUp> {
                 padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
                 width: 500,
                 child: TextField(
+                    controller: _textEditingController2,
                     obscureText: _obscureText1,
                     onChanged: (value) {},
                     decoration: InputDecoration(border: OutlineInputBorder(),labelText: '비밀번호',labelStyle: TextStyle(color: Colors.grey),
@@ -70,6 +80,7 @@ class _SignUpState extends State<SignUp> {
                 padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
                 width: 500,
                 child: TextField(
+                    controller: _textEditingController3,
                     obscureText: _obscureText2,
                     onChanged: (value) {},
                     decoration: InputDecoration(border: OutlineInputBorder(),labelText: '비밀번호 재확인',labelStyle: TextStyle(color: Colors.grey),
@@ -89,7 +100,27 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               SizedBox(height: 31,),
-              ElevatedButton(onPressed: (){
+              ElevatedButton(onPressed: () async {
+                try{
+                  marimoId = await signup.IsAvailable(_textEditingController1.text);
+                }catch(e){
+                  print('Error:$e');
+                }
+                if(marimoId!=0){//사용자 존재
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("이미 존재하는 고유번호입니다.")));
+                }
+                else{
+                  if(_textEditingController2.text==_textEditingController3.text){
+                    id = _textEditingController1.text;
+                    pw = _textEditingController2.text;
+                    Get.to(SignUp2(),arguments: {'id':'$id','pw':'$pw'});
+                    //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("고고.")));
+                  }
+                  else{
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("입력하신 비밀번호가 다릅니다.")));
+                  }
+
+                }
 
               }, child: Container(
                 width: 320,

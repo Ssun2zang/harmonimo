@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonimo/MyController.dart';
 import 'package:harmonimo/landingpage.dart';
 
 
 void main() {
+  Get.put(MyController());
   runApp(const MyApp());
 }
 

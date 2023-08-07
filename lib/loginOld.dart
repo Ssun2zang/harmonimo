@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:harmonimo/API/login_api.dart';
+import 'package:get/get.dart';
+import 'package:harmonimo/mainpage.dart';
 
 class LoginOld extends StatefulWidget {
   const LoginOld({super.key});
@@ -10,6 +13,9 @@ class LoginOld extends StatefulWidget {
 class _LoginOldState extends State<LoginOld> {
   final TextEditingController _textEditingController1 = TextEditingController();
   final TextEditingController _textEditingController2 = TextEditingController();
+  LoginApi loginApi = LoginApi();
+  int userId = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,8 +69,18 @@ class _LoginOldState extends State<LoginOld> {
               ),
               SizedBox(height: 17,),
 
-              ElevatedButton(onPressed: (){
-
+              ElevatedButton(onPressed: () async {
+                try{
+                  userId = await loginApi.login(_textEditingController1.text, _textEditingController2.text);
+                }catch(e){
+                  print('Error:$e');
+                }
+                if(userId!=0){
+                  Get.to(MainPage());
+                }
+                else{
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("로그인 실패")));
+                }
               }, child: Container(
                 width: 320,
                 height: 79,

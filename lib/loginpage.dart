@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:harmonimo/API/login_api.dart';
 import 'package:harmonimo/signup.dart';
 import 'package:harmonimo/mainpage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,6 +13,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  static final storage = FlutterSecureStorage();
+  dynamic userInfo = '';
 
   LoginApi loginApi = LoginApi();
   int userId = 0;

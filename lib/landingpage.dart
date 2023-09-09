@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonimo/loginpage.dart';
-import 'package:harmonimo/loginpageOld.dart';
+import 'package:harmonimo/elderMain.dart';
+import 'package:harmonimo/mainpage.dart';
+
 
 
 class LandingPage extends StatefulWidget {
@@ -38,21 +39,21 @@ class _LandingPageState extends State<LandingPage> {
             ),
             Spacer(),
             ElevatedButton(onPressed: () {
-              Get.to(LoginPageOld());
+              Get.to(ElderMain());
             }, child: Container(
               width: 320,
               height: 48,
-              child: Center(child: Text("어르신 로그인",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 20))),
+              child: Center(child: Text("어르신 사용",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 20))),
             ),style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xFFA9CC60)))),
             SizedBox(
               height: 30,
             ),
             ElevatedButton(onPressed: () {
-              Get.to(LoginPage());
+              Get.to(MainPage());
             }, child: Container(
               width: 320,
               height: 48,
-              child: Center(child: Text("일반 로그인",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 12))),
+              child: Center(child: Text("파트너 사용",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 12))),
             ),style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xFFA9CC60)))),
             Spacer()
 

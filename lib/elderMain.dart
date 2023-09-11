@@ -103,6 +103,7 @@ class _ElderMainState extends State<ElderMain> {
     //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("recorded")));
     //int ans = voiceApi.uploadAudio(path) as int;
     //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$ans")));
+    print('Recorded path: $path');
     print('Recorded audio: $audioFile');
   }
 

@@ -19,8 +19,7 @@ class VoiceApi{
 
     String uploadUrl = 'http://ec2-3-39-175-221.ap-northeast-2.compute.amazonaws.com:8080/uploadNewRec'; // 서버의 업로드 엔드포인트 URL
 // 파일 경로 지정
-    final ByteData fileBytes = await rootBundle.load('$audioFile.path');
-    final List<int> fileBytesList = fileBytes.buffer.asUint8List();
+    final List<int> fileBytesList = await audioFile.readAsBytes();
     final MultipartFile multipartFile = MultipartFile.fromBytes(
       fileBytesList,
       filename: 'test.MP3',
@@ -39,6 +38,7 @@ class VoiceApi{
 
 
       if (response.statusCode == 200) {
+        print(response.statusCode);
         return response.statusCode as int;
       } else {
         // 전송 실패

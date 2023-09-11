@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonimo/elderMain.dart';
 import 'package:harmonimo/mainpage.dart';
+import 'package:harmonimo/test.dart';
 
 
 
@@ -49,7 +50,7 @@ class _LandingPageState extends State<LandingPage> {
               height: 30,
             ),
             ElevatedButton(onPressed: () {
-              Get.to(MainPage());
+              Get.to(AudioRecordingScreen());
             }, child: Container(
               width: 320,
               height: 48,

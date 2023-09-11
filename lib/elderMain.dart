@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:harmonimo/API/marimoShow_api.dart';
 import 'package:harmonimo/API/marimoStat_api.dart';
@@ -8,6 +9,9 @@ import 'package:harmonimo/marimodoc.dart';
 import 'package:get/get.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import 'package:path_provider/path_provider.dart';
 
 class ElderMain extends StatefulWidget {
@@ -25,6 +29,7 @@ class _ElderMainState extends State<ElderMain> {
   bool isRecorderReady = false;
   File audioFile = File('');
   VoiceApi voiceApi = VoiceApi();
+  Dio dio = Dio();
 
   @override
   void initState(){
@@ -58,6 +63,36 @@ class _ElderMainState extends State<ElderMain> {
   }
 
 
+
+  Future<String> uploadRecord(File File) async {
+    final url = Uri.parse('http://ec2-3-39-175-221.ap-northeast-2.compute.amazonaws.com:8080/uploadNewRec');
+    if (File == null) {
+      return "";
+    }
+
+    // open the image file
+    final bytes = await File.readAsBytes();
+
+    // create the multipart request
+    final request = http.MultipartRequest('POST', url)
+      ..files.add(http.MultipartFile.fromBytes('file', bytes,
+          filename: 'ex.mp3'));
+
+    // send the request
+    final response = await request.send();
+    final responseBody = await response.stream.bytesToString();
+
+    // check the response status code
+    if (response.statusCode == 200) {
+      final responseJson = jsonDecode(responseBody);
+      final Url = responseJson['uploadRec'];
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(Url)));
+      return Url;
+    } else {
+      throw Exception('Failed to post file');
+    }
+  }
+
   Future stop() async {
     if(!isRecorderReady){
       return;
@@ -65,9 +100,9 @@ class _ElderMainState extends State<ElderMain> {
     final path = await recorder.stopRecorder();
     audioFile = File(path!);
 
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("recorded")));
-    int ans = voiceApi.uploadAudio(path) as int;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$ans")));
+    //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("recorded")));
+    //int ans = voiceApi.uploadAudio(path) as int;
+    //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$ans")));
     print('Recorded audio: $audioFile');
   }
 
@@ -151,7 +186,9 @@ class _ElderMainState extends State<ElderMain> {
                               child: Container(
                                 child: Text('PLAY'),
                               )),
-                          ElevatedButton(onPressed: (){
+                          ElevatedButton(onPressed: () async {
+                            int ans = await voiceApi.uploadVoiceFile(audioFile);
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$ans")));
                           }, child: Container(
                               child: Text('SEND')))
 

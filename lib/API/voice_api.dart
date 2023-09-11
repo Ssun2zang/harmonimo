@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:http_parser/http_parser.dart';
+import 'dart:typed_data';
 
 class VoiceApi{
   Dio dio = Dio();
@@ -15,24 +18,26 @@ class VoiceApi{
     }
 
     String uploadUrl = 'http://ec2-3-39-175-221.ap-northeast-2.compute.amazonaws.com:8080/uploadNewRec'; // 서버의 업로드 엔드포인트 URL
+// 파일 경로 지정
+    final ByteData fileBytes = await rootBundle.load('$audioFile.path');
+    final List<int> fileBytesList = fileBytes.buffer.asUint8List();
+    final MultipartFile multipartFile = MultipartFile.fromBytes(
+      fileBytesList,
+      filename: 'test.MP3',
+      contentType: MediaType.parse('audio/mpeg'), // 파일의 MIME 타입 설정
+    );
+
+    FormData formData = FormData.fromMap({
+      'file': multipartFile,
+    });
 
     try {
-      FormData formData = FormData.fromMap({
-        'file': await MultipartFile.fromFile(
-          audioFile!.path,
-          filename: 'plz.mp3', // 업로드할 파일 이름
-        ),
-      });
-
       Response response = await dio.post(
-        uploadUrl,
+        uploadUrl, // 파일을 업로드할 API 엔드포인트 URL
         data: formData,
-        options: Options(
-          headers: {
-            // 필요한 헤더를 추가하세요 (예: 인증 토큰 등)
-          },
-        ),
       );
+
+
       if (response.statusCode == 200) {
         return response.statusCode as int;
       } else {

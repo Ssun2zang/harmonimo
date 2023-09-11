@@ -7,6 +7,22 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http_parser/http_parser.dart';
 import 'dart:typed_data';
+import 'package:path/path.dart';
+// import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
+
+// Future<void> convertToMp3(String inputFilePath, String outputFilePath) async {
+//   final FlutterFFmpeg _flutterFFmpeg = FlutterFFmpeg();
+//
+//   int rc = await _flutterFFmpeg.execute(
+//     '-i $inputFilePath -codec:a libmp3lame -q:a 0 $outputFilePath',
+//   );
+//
+//   if (rc == 0) {
+//     print('Conversion successful');
+//   } else {
+//     print('Conversion failed with code $rc');
+//   }
+// }
 
 class VoiceApi{
   Dio dio = Dio();
@@ -19,11 +35,13 @@ class VoiceApi{
 
     String uploadUrl = 'http://ec2-3-39-175-221.ap-northeast-2.compute.amazonaws.com:8080/uploadNewRec'; // 서버의 업로드 엔드포인트 URL
 // 파일 경로 지정
+    String fileExtension = extension(audioFile.path);
+    print('File extension: $fileExtension');
     final List<int> fileBytesList = await audioFile.readAsBytes();
     final MultipartFile multipartFile = MultipartFile.fromBytes(
       fileBytesList,
-      filename: 'test.MP3',
-      contentType: MediaType.parse('audio/mpeg'), // 파일의 MIME 타입 설정
+      filename: 'test.m4a',
+      //contentType: MediaType.parse('audio/mpeg'), // 파일의 MIME 타입 설정
     );
 
     FormData formData = FormData.fromMap({

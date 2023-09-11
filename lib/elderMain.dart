@@ -99,7 +99,7 @@ class _ElderMainState extends State<ElderMain> {
     }
     final path = await recorder.stopRecorder();
     audioFile = File(path!);
-
+    recorder.recordingData();
     //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("recorded")));
     //int ans = voiceApi.uploadAudio(path) as int;
     //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$ans")));

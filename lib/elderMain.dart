@@ -14,6 +14,8 @@ import 'dart:convert';
 
 import 'package:path_provider/path_provider.dart';
 
+import 'friends.dart';
+
 class ElderMain extends StatefulWidget {
   const ElderMain({super.key});
 
@@ -198,7 +200,7 @@ class _ElderMainState extends State<ElderMain> {
                     ),
                   ),
                 ),),
-                Center(child: Column(),)
+                FriendWidget(),
               ],
             ),
             extendBodyBehindAppBar: true,

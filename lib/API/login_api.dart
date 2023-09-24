@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:harmonimo/API/marimoDeco_api.dart';
 import 'package:harmonimo/MyController.dart';
-import 'package:harmonimo/marimoDeco.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

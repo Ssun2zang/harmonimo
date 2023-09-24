@@ -17,7 +17,12 @@ class MyController extends GetxController {
   RxString stText1 = RxString('데이터가 없어요');
   RxString stText2 = RxString('데이터가 없어요');
   RxString stText3 = RxString('데이터가 없어요');
-
+  RxInt current = 0.obs;
+  RxString recentYear = RxString('데이터가 없어요');
+  RxString recentMonth = RxString('데이터가 없어요');
+  RxString recentDay = RxString('데이터가 없어요');
+  RxString recentId = RxString('데이터가 없어요');
+  RxString name = RxString('김갑수');
   RxList<int> selectedDiseaseIndexes = <int>[].obs;
 
   List<String> allDiseases = [
@@ -74,7 +79,50 @@ class MyController extends GetxController {
     while (true) {
       // API 호출 및 데이터 업데이트
       fetchDataFromServer();
+      recentLog(Id.value);
       await Future.delayed(Duration(seconds: 10));
+    }
+  }
+
+  Future<void> recentLog(int id) async {
+    final String baseUrl = 'http://ec2-3-39-175-221.ap-northeast-2.compute.amazonaws.com:8080';
+
+    // HTTP GET 요청을 보냅니다.
+    final url = Uri.parse('$baseUrl/logs/user/$id');
+
+    final response = await http.get(url);
+
+    print(response.statusCode);
+    // 응답 상태 코드가 200 (OK) 인지 확인합니다.
+    if (response.statusCode == 200) {
+      String jsonString = response.body;
+      Map<String, dynamic> jsonData = jsonDecode(jsonString);
+      DateTime time1 = DateTime.parse(jsonData["log1"]);
+      DateTime time2 = DateTime.parse(jsonData["log2"]);
+      DateTime time3 = DateTime.parse(jsonData["log3"]);
+      DateTime most = time1;
+      String str = '조명을 바꿔줬어요';
+      if (time2.isAfter(most)) {
+        most = time2;
+        str = '온도를 바꿔줬어요';
+      }
+      if (time3.isAfter(most)) {
+        most = time3;
+        str = '물을 갈아줬어요';
+      }
+
+      print(time1);
+      print(time2);
+      print(time3);
+      recentYear.value = most.year.toString();
+      recentMonth.value = most.month.toString();
+      recentDay.value = most.day.toString();
+      recentId.value = str;
+      print(str);
+    } else {
+      // 요청이 실패하면 에러 메시지를 반환합니다.
+      print('Failed');
+
     }
   }
 
@@ -94,7 +142,6 @@ class MyController extends GetxController {
       st3.value = jsonData["stat3"];
       if(st1.value<200){
         stText1.value = '너무 어두워요!';
-
       }
       else if(st1.value<850){
         stText1.value = '좋아요!';

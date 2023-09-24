@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonimo/API/login_api.dart';
 import 'package:harmonimo/elderMain.dart';
 import 'package:harmonimo/mainpage.dart';
 import 'package:harmonimo/test.dart';
@@ -18,7 +19,6 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +50,7 @@ class _LandingPageState extends State<LandingPage> {
               height: 30,
             ),
             ElevatedButton(onPressed: () {
-              Get.to(AudioRecordingScreen());
+              Get.to(MainPage());
             }, child: Container(
               width: 320,
               height: 48,

@@ -15,7 +15,7 @@ class VoiceApi{
   final random = Random();
   Dio dio = Dio();
   Future<void> uploadUrlElder(String url,int Id) async{
-    int temp = 1;
+    int temp = 2;
     final String baseUrl = 'http://ec2-3-39-175-221.ap-northeast-2.compute.amazonaws.com:8080/records';
     final Map<String,String> headers = {'Content-Type':'application/json'};
     //List<int> imageBytes = await imageFile.readAsBytes();
@@ -63,7 +63,7 @@ class VoiceApi{
       print('Failed to send image and data. Status code: ${response.statusCode}');
     }
   }
-  Future<void> uploadUrlOther(String url,int senderId,receiveId) async{
+  Future<void> uploadUrlOther(String url,int senderId,int receiveId) async{
     final String baseUrl = 'http://ec2-3-39-175-221.ap-northeast-2.compute.amazonaws.com:8080/records';
     final Map<String,String> headers = {'Content-Type':'application/json'};
     //List<int> imageBytes = await imageFile.readAsBytes();

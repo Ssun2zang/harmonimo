@@ -230,7 +230,7 @@ class _ElderMainState extends State<ElderMain> {
                               //String name= await voiceApi.getName(msgList[i].id);
                               //print(name);
                               if(msgList[i].url!=''){
-                                await _speak("$i 번째 소식입니다. 본인으로 부터 소식입니다.");
+                                await _speak("$i 번째 소식입니다. 보호자으로 부터 소식입니다.");
                                 await audioPlayer.play(UrlSource(msgList[i].url));
                                 await audioPlayer.onPlayerComplete.first;
                                 //await _speak('여기까지입니다.');

@@ -151,7 +151,7 @@ class _MainPageState extends State<MainPage> {
                                       ),style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xFFA9CC60)))),
                                   ElevatedButton(onPressed: () async {
                                     String ans = await voiceApi.uploadVoiceFile(audioFile,100);
-                                    voiceApi.uploadUrlOther(ans, 1,myController.Id.value);
+                                    voiceApi.uploadUrlOther(ans, 2,myController.Id.value);
                                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$ans")));
                                     showDialog(
                                         context: context,
@@ -192,7 +192,7 @@ class _MainPageState extends State<MainPage> {
                                       child: Text('목소리 보내기',style: myStyle,)),style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xFFA9CC60))),),
 
                                   ElevatedButton(onPressed: () async {
-                                    msgList = await voiceApi.getMessages(100);
+                                    msgList = await voiceApi.getMessages(2);
                                     int len = msgList.length;
                                     await _speak("지금까지 $len 개의 소식이 왔습니다.");
                                     for(int i =0;i<len;i++){
@@ -279,7 +279,6 @@ class _MainPageState extends State<MainPage> {
                           ],
                         ),
                         Column(
-
                           children: [
                             Text('${myController.recentYear.value}년\n${myController.recentMonth.value}월\n${myController.recentDay.value}일',style: myStyle,),
                             Text('${myController.recentId.value}',style: myStyle,)
@@ -294,7 +293,34 @@ class _MainPageState extends State<MainPage> {
               Center(child: Column(
                 children: [
                   AppBar(title: Text("내 정보",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: Colors.black),),backgroundColor: Colors.white,centerTitle: true,),
+                  SizedBox(height: 40,),
                   Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.person,color: Colors.black,),
+                        SizedBox(height: 16),
+                        Text('어르신 성함: 김갑수'),
+                        Text('보호자 이름: 김보호'),
+                        Text('어르신 연세: 67세'),
+                        Text('보유 질병: 당뇨, 무릎관절증'),
+                      ],
+                    ),
+
                   )
                 ],
               )),

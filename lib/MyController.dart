@@ -11,9 +11,9 @@ class MyController extends GetxController {
   RxInt pet = 0.obs;
   RxInt Id = 0.obs;
   RxInt MarimoId = 0.obs;
-  RxInt st1 = 0.obs;
-  RxInt st2 = 0.obs;
-  RxInt st3 = 0.obs;
+  RxInt st1 = 0.obs;//조도
+  RxInt st2 = 0.obs;//온도
+  RxInt st3 = 0.obs;//탁도
   RxString stText1 = RxString('데이터가 없어요');
   RxString stText2 = RxString('데이터가 없어요');
   RxString stText3 = RxString('데이터가 없어요');
@@ -137,9 +137,9 @@ class MyController extends GetxController {
     if (response.statusCode == 200) {
       String jsonString = response.body;
       Map<String, dynamic> jsonData = jsonDecode(jsonString);
-      st1.value = jsonData["stat1"];
-      st2.value = jsonData["stat2"];
-      st3.value = jsonData["stat3"];
+      st1.value = jsonData["stat1"];//조도
+      st2.value = jsonData["stat3"];//온도
+      st3.value = jsonData["stat2"];//탁도
       if(st1.value<200){
         stText1.value = '너무 어두워요!';
       }

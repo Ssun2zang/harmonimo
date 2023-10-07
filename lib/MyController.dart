@@ -140,15 +140,11 @@ class MyController extends GetxController {
       st1.value = jsonData["stat1"];//조도
       st2.value = jsonData["stat3"];//온도
       st3.value = jsonData["stat2"];//탁도
-      if(st1.value<200){
-        stText1.value = '너무 어두워요!';
-      }
-      else if(st1.value<850){
+      if(st1.value<400){
         stText1.value = '좋아요!';
-
       }
       else{
-        stText1.value = '너무 밝아요!';
+        stText1.value = '너무 어두워요!';
       }
       if(st2.value<14){
         stText2.value = '추워요!';
@@ -159,14 +155,14 @@ class MyController extends GetxController {
       else{
         stText2.value = '너무 더워요!';
       }
-      if(st3.value<200){
-        stText3.value = '좋아요!';
+      if(st3.value>700){
+        stText3.value = '너무 더러워요!';
       }
-      else if(st3.value<350){
-        stText3.value = '물이 조금 탁해요.';
+      else if(st3.value>600){
+        stText3.value = '조금 탁해요.';
       }
       else{
-        stText3.value = '물이 너무 더러워요!';
+        stText3.value = '좋아요!';
       }
       print(jsonDecode(response.body));
     } else {
